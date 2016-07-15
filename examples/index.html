@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Demo</title>
+</head>
+<body>
+  <div id="app">
+    <form @submit.prevent="handleSubmit">
+      <input type="text" v-model="username" placeholder="username">
+      <input type="password" v-model="password" placeholder="password">
+      <input type="password" v-model="conform" placeholder="conform">
+      <button type="submit" :disabled="invalid">submit</button>
+      <ul>
+        <li v-for="err in errors" v-text="err"></li>
+      </ul>
+    </form>
+  </div>
+</body>
+  <script src="../node_modules/vue/dist/vue.js"></script>
+  <script src="../dist/index.js"></script>
+  <script src="./entry.js"></script>
+</html>

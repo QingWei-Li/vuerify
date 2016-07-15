@@ -1,0 +1,43 @@
+{
+  "name": "vuerify",
+  "version": "0.1.0",
+  "description": "form validator",
+  "main": "dist/index.js",
+  "jsnext:main": "src/index.js",
+  "scripts": {
+    "test": "ava",
+    "dist": "rollup -c rollup.config.js",
+    "dev": "rollup -c rollup.config.js -w",
+    "lint:fix": "eslint src --fix",
+    "lint": "eslint src"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qingwei-li/vuerify.git"
+  },
+  "keywords": [
+    "form",
+    "validator",
+    "vue",
+    "plugin"
+  ],
+  "author": "qingwei-li <cinwell.li@gmail.com>",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://github.com/qingwei-li/vuerify/issues"
+  },
+  "homepage": "https://github.com/qingwei-li/vuerify#readme",
+  "devDependencies": {
+    "ava": "^0.15.2",
+    "babel-preset-es2015": "^6.9.0",
+    "eslint": "^3.0.1",
+    "eslint-config-vue": "^1.0.3",
+    "rollup": "^0.34.1",
+    "rollup-watch": "^2.5.0",
+    "vue": "^2.0.0-beta.1"
+  }
+}
