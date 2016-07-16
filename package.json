@@ -5,16 +5,22 @@
   "main": "dist/index.js",
   "jsnext:main": "src/index.js",
   "scripts": {
-    "test": "npm run lint && ava",
+    "test": "npm run dist && ava",
     "dist": "npm run lint && rollup -c rollup.config.js",
     "dev": "webpack-dev-server --config examples/webpack.config.js --inline --hot --port 8666 -no-info",
     "deploy": "rm -rf examples/dist && NODE_ENV=production webpack --config examples/webpack.config.js --progress && gh-pages -d examples/dist",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "prepublish": "npm test"
   },
   "files": [
     "dist",
     "src"
   ],
+  "ava": {
+    "files": [
+      "test/util/*.js"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/qingwei-li/vuerify.git"
@@ -40,7 +46,6 @@
     "gh-pages": "^0.11.0",
     "html-webpack-plugin": "^2.22.0",
     "rollup": "^0.34.1",
-    "rollup-watch": "^2.5.0",
     "vue": "^2.0.0-beta.1",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"
