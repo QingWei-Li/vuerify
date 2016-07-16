@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>mint-ui</title>
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <script src="//github.elemecdn.com/vuejs/vue/v1.0.26/dist/vue.min.js"></script>
+  <link rel="stylesheet" href="//npmcdn.com/mint-ui@0.1.21/lib/style.css">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <mt-field label="邮箱" placeholder="请输入邮箱" :value.sync="username" :state="errors.username ? 'error': username ? 'success': ''"></mt-field>
+    <mt-field label="密码" placeholder="请输入密码" :value.sync="password" :state="errors.password ? 'error': password ? 'success': ''"></mt-field>
+    <mt-field label="确认密码" placeholder="请再次输入密码" :value.sync="conform" :state="errors.conform ? 'error': conform ? 'success': ''"></mt-field>
+
+    <mt-button size="large" style="margin-top: 15px" @click="handleSubmit" :disabled="invalid">注册</mt-button>
+
+    <ul><li v-for="err in errors" v-text="err"></li></ul>
+  </div>
+<script type="text/javascript" src="/vuerify/vuerify.bca77ef.js"></script><script type="text/javascript" src="/vuerify/mint-ui.4cc12d5.js"></script></body>
+</html>
