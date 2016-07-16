@@ -14,9 +14,10 @@ function check (field, value) {
       : rule)
 
   if (!regex || !regex.test) {
-    console.warn('[vuerify] rule does not exist: ' + rule)
+    console.warn('[vuerify] rule does not exist: ' + rule.test || rule)
     return
   }
+  regex.message = rule.message || regex.message
 
   const oldError = this.$vuerify.$errors[field]
   const result = _toString.call(regex.test) === '[object Function]'

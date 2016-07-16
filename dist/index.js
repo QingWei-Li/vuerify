@@ -56,11 +56,15 @@
   var RULES = {
     email: {
       test: /^(([^<>()[\]\\.,;:\s"]+(\.[^<>()[\]\\.,;:\s"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      message: '邮箱输入错误'
+      message: '邮箱格式错误'
     },
     required: {
       test: /\S+$/,
       message: '必填项'
+    },
+    url: {
+      test: /^(https?|ftp|rmtp|mms):\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)(:(\d+))?\/?/i,
+      message: 'URL 格式错误'
     }
   }
 
@@ -78,9 +82,10 @@
         : rule)
 
     if (!regex || !regex.test) {
-      console.warn('[vuerify] rule does not exist: ' + rule)
+      console.warn('[vuerify] rule does not exist: ' + rule.test || rule)
       return
     }
+    regex.message = rule.message || regex.message
 
     const oldError = this.$vuerify.$errors[field]
     const result = _toString.call(regex.test) === '[object Function]'

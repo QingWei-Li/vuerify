@@ -4,11 +4,9 @@ const Directive = {
   params: ['verifyInvalidClass'],
 
   bind () {
-    if (this.modifiers.parent) {
-      this.hasVerify = Boolean(this.vm.$parent.$options.vuerify)
-    } else {
-      this.hasVerify = Boolean(this.vm.$options.vuerify)
-    }
+    this.hasVerify = this.modifiers.parent
+      ? Boolean(this.vm.$parent.$options.vuerify)
+      : Boolean(this.vm.$options.vuerify)
     this.errorClass = this.params.verifyErrorClass || 'vuerify-invalid'
   },
 
