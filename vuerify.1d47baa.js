@@ -76,7 +76,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"signup","1":"use-directive"}[chunkId]||chunkId) + "." + {"0":"5425020","1":"1530571"}[chunkId] + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"signup","1":"use-directive"}[chunkId]||chunkId) + "." + {"0":"70ab324","1":"58a5793"}[chunkId] + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -243,28 +243,30 @@
 	  regex.message = rule.message || regex.message;
 
 	  var oldError = this.$vuerify.$errors[field];
-	  var result = _toString.call(regex.test) === '[object Function]' ? regex.test.call(this, value) : regex.test.test(value);
+	  var valid = _toString.call(regex.test) === '[object Function]' ? regex.test.call(this, value) : regex.test.test(value);
 
-	  if (result) {
+	  if (valid) {
 	    Vue.delete(this.$vuerify.$errors, field);
 	  } else if (!oldError) {
 	    Vue.set(this.$vuerify.$errors, field, regex.message);
 	  }
 
-	  var invalid = Boolean(Object.keys(this.$vuerify.$errors).length);
+	  var hasErrors = Boolean(Object.keys(this.$vuerify.$errors).length);
 
-	  this.$vuerify.valid = !invalid;
-	  this.$vuerify.invalid = invalid;
+	  this.$vuerify.valid = !hasErrors;
+	  this.$vuerify.invalid = hasErrors;
+
+	  return valid;
 	}
 
 	function checkAll(fields) {
 	  var vm = this.vm;
 
 	  fields = fields || Object.keys(vm.$options.vuerify);
-	  fields.forEach(function (field) {
+
+	  return fields.map(function (field) {
 	    return check.call(vm, field, vm._data[field]);
-	  });
-	  return this;
+	  }).indexOf(false) === -1;
 	}
 
 	var Vuerify = function () {

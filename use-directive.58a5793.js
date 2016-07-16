@@ -63,7 +63,7 @@ webpackJsonp([1],[
 
 	  methods: {
 	    handleSubmit: function handleSubmit() {
-	      if (this.$vuerify.check().valid) {
+	      if (this.$vuerify.check()) {
 	        alert('welcome ' + this.username); // eslint-disable-line
 	      }
 	    }
