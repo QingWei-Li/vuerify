@@ -76,7 +76,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"signup","1":"use-directive"}[chunkId]||chunkId) + "." + {"0":"7e1000e","1":"1530571"}[chunkId] + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"signup","1":"use-directive"}[chunkId]||chunkId) + "." + {"0":"5425020","1":"1530571"}[chunkId] + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -159,11 +159,7 @@
 	  params: ['verifyInvalidClass'],
 
 	  bind: function bind() {
-	    if (this.modifiers.parent) {
-	      this.hasVerify = Boolean(this.vm.$parent.$options.vuerify);
-	    } else {
-	      this.hasVerify = Boolean(this.vm.$options.vuerify);
-	    }
+	    this.hasVerify = this.modifiers.parent ? Boolean(this.vm.$parent.$options.vuerify) : Boolean(this.vm.$options.vuerify);
 	    this.errorClass = this.params.verifyErrorClass || 'vuerify-invalid';
 	  },
 	  update: function update(id) {
@@ -241,9 +237,10 @@
 	  var regex = _toString.call(rule) === '[object String]' ? $rules[rule] : _toString.call(rule.test) === '[object String]' ? $rules[rule.test] : rule;
 
 	  if (!regex || !regex.test) {
-	    console.warn('[vuerify] rule does not exist: ' + rule);
+	    console.warn('[vuerify] rule does not exist: ' + rule.test || rule);
 	    return;
 	  }
+	  regex.message = rule.message || regex.message;
 
 	  var oldError = this.$vuerify.$errors[field];
 	  var result = _toString.call(regex.test) === '[object Function]' ? regex.test.call(this, value) : regex.test.test(value);
@@ -318,11 +315,15 @@
 	exports.default = {
 	  email: {
 	    test: /^(([^<>()[\]\\.,;:\s"]+(\.[^<>()[\]\\.,;:\s"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-	    message: '邮箱输入错误'
+	    message: '邮箱格式错误'
 	  },
 	  required: {
 	    test: /\S+$/,
 	    message: '必填项'
+	  },
+	  url: {
+	    test: /^(https?|ftp|rmtp|mms):\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)(:(\d+))?\/?/i,
+	    message: 'URL 格式错误'
 	  }
 	};
 

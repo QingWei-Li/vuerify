@@ -30,14 +30,17 @@ webpackJsonp([0],[
 
 
 	  vuerify: {
-	    username: 'email',
+	    username: {
+	      test: 'email',
+	      message: '邮箱错误'
+	    },
 	    password: {
 	      test: /\w{4,}/,
 	      message: '至少四位字符'
 	    },
 	    conform: {
 	      test: function test(val) {
-	        return val === this.password;
+	        return val && val === this.password;
 	      },
 
 	      message: '两次密码输入不一致'
