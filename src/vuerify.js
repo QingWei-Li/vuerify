@@ -20,28 +20,32 @@ function check (field, value) {
   regex.message = rule.message || regex.message
 
   const oldError = this.$vuerify.$errors[field]
-  const result = _toString.call(regex.test) === '[object Function]'
+  const valid = _toString.call(regex.test) === '[object Function]'
     ? regex.test.call(this, value)
     : regex.test.test(value)
 
-  if (result) {
+  if (valid) {
     Vue.delete(this.$vuerify.$errors, field)
   } else if (!oldError) {
     Vue.set(this.$vuerify.$errors, field, regex.message)
   }
 
-  const invalid = Boolean(Object.keys(this.$vuerify.$errors).length)
+  const hasErrors = Boolean(Object.keys(this.$vuerify.$errors).length)
 
-  this.$vuerify.valid = !invalid
-  this.$vuerify.invalid = invalid
+  this.$vuerify.valid = !hasErrors
+  this.$vuerify.invalid = hasErrors
+
+  return valid
 }
 
 function checkAll (fields) {
   const vm = this.vm
 
   fields = fields || Object.keys(vm.$options.vuerify)
-  fields.forEach(field => check.call(vm, field, vm._data[field]))
-  return this
+
+  return fields.map(field =>
+    check.call(vm, field, vm._data[field])
+  ).indexOf(false) === -1
 }
 
 class Vuerify {

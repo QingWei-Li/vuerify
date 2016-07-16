@@ -12,6 +12,10 @@
 - [basic](https://qingwei-li.github.io/vuerify/signup)
 - [use directive](https://qingwei-li.github.io/vuerify/use-directive)
 
+## Docs
+- [中文文档](https://github.com/QingWei-Li/vuerify/wiki/%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3)
+- [Documentation](https://github.com/QingWei-Li/vuerify/wiki/Documentation)
+
 ## Installation
 ```shell
 npm i vuerify -S

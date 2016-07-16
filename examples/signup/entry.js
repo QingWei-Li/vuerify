@@ -40,7 +40,8 @@ new Vue({ // eslint-disable-line
 
   methods: {
     handleSubmit () {
-      if (this.$vuerify.check().valid) {
+      console.log(this.$vuerify.check())
+      if (this.$vuerify.check()) {
         alert(`welcome ${this.username}`) // eslint-disable-line
       }
     }
