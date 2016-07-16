@@ -1,8 +1,8 @@
-import Vue from 'vue'
+import { Field, Button, MessageBox } from 'mint-ui'
 
-new Vue({ // eslint-disable-line
+new Vue({
   el: '#app',
-
+  components: [Field, Button],
   data () {
     return {
       username: '',
@@ -10,24 +10,19 @@ new Vue({ // eslint-disable-line
       conform: ''
     }
   },
-
   vuerify: {
-    username: {
-      test: 'email',
-      message: '邮箱错误'
-    },
+    username: 'email',
     password: {
       test: /\w{4,}/,
-      message: '至少四位字符'
+      message: '至少四位'
     },
     conform: {
       test (val) {
         return val && !this.$vuerify.$errors.password && val === this.password
       },
-      message: '两次密码输入不一致'
+      message: '两次输入不一致'
     }
   },
-
   computed: {
     errors () {
       return this.$vuerify.$errors
@@ -37,11 +32,10 @@ new Vue({ // eslint-disable-line
       return this.$vuerify.invalid
     }
   },
-
   methods: {
     handleSubmit () {
       if (this.$vuerify.check()) {
-        alert(`welcome ${this.username}`) // eslint-disable-line
+        MessageBox(`注册成功 ${this.username}`) // eslint-disable-line
       }
     }
   }

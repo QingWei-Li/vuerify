@@ -30,10 +30,10 @@ function check (field, value) {
     Vue.set(this.$vuerify.$errors, field, regex.message)
   }
 
-  const hasErrors = Boolean(Object.keys(this.$vuerify.$errors).length)
+  const hasError = Boolean(Object.keys(this.$vuerify.$errors).length)
 
-  this.$vuerify.valid = !hasErrors
-  this.$vuerify.invalid = hasErrors
+  this.$vuerify.valid = !hasError
+  this.$vuerify.invalid = hasError
 
   return valid
 }

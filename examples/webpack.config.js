@@ -4,7 +4,8 @@ var path = require('path')
 
 var examples = [
   'signup',
-  'use-directive'
+  'directive',
+  'mint-ui'
 ]
 
 var entry = {
@@ -29,7 +30,7 @@ examples.forEach(function (key) {
   }))
 })
 
-if (process.env.NODE_DEV === 'production') {
+if (process.env.NODE_ENV === 'production') {
   plugins.push(new webpack.optimize.UglifyJsPlugin({
     compress: {
       warnings: false
@@ -63,8 +64,12 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'vuerify': path.join(__dirname, '../src/index.js')
+      'vuerify': path.join(__dirname, '../src.index.js')
     }
+  },
+  babel: {
+    presets: ['es2015'],
+    plugins: [['component', { 'libraryName': 'mint-ui' }]]
   },
   plugins: plugins
 }

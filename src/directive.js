@@ -1,17 +1,17 @@
 let Vue
 
 const Directive = {
-  params: ['verifyInvalidClass'],
+  params: ['vuerifyInvalidClass'],
 
   bind () {
-    this.hasVerify = this.modifiers.parent
+    this.hasVuerify = this.modifiers.parent
       ? Boolean(this.vm.$parent.$options.vuerify)
       : Boolean(this.vm.$options.vuerify)
-    this.errorClass = this.params.verifyErrorClass || 'vuerify-invalid'
+    this.errorClass = this.params.vuerifyInvalidClass || 'vuerify-invalid'
   },
 
   update (id) {
-    if (!this.hasVerify) return
+    if (!this.hasVuerify) return
 
     const vm = this.modifiers.parent
       ? this.vm.$parent

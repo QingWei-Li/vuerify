@@ -1,12 +1,11 @@
 {
   "name": "vuerify",
   "version": "0.1.1",
-  "description": "Form validator plugin for Vue.js",
-  "main": "dist/index.js",
-  "jsnext:main": "src/index.js",
+  "description": "Validation plugin for Vue.js",
+  "main": "dist/vuerify.common.js",
   "scripts": {
     "test": "npm run dist && ava",
-    "dist": "npm run lint && rollup -c rollup.config.js",
+    "dist": "rm -rf dist && npm run lint && rollup -c && uglifyjs ./dist/vuerify.js -cm > ./dist/vuerify.min.js",
     "dev": "webpack-dev-server --config examples/webpack.config.js --inline --hot --port 8666 -no-info",
     "deploy": "rm -rf examples/dist && NODE_ENV=production webpack --config examples/webpack.config.js --progress && gh-pages -d examples/dist",
     "lint": "eslint src",
@@ -40,12 +39,17 @@
   "devDependencies": {
     "ava": "^0.15.2",
     "babel-loader": "^6.2.4",
+    "babel-plugin-component": "^0.3.3",
     "babel-preset-es2015": "^6.9.0",
+    "babel-preset-es2015-rollup": "^1.1.1",
     "eslint": "^3.0.1",
     "eslint-config-vue": "^1.0.3",
     "gh-pages": "^0.11.0",
     "html-webpack-plugin": "^2.22.0",
+    "mint-ui": "^0.1.21",
     "rollup": "^0.34.1",
+    "rollup-plugin-babel": "^2.6.1",
+    "uglify-js": "^2.7.0",
     "vue": "^2.0.0-beta.1",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"
