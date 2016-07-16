@@ -76,8 +76,8 @@ component
 
   methods: {
     handleSumit () {
-      if (this.$vuerify.check().valid) {
-        // do
+      if (this.$vuerify.check()) {
+        // doing
       }
     }
   }
