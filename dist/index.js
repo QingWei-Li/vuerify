@@ -10,11 +10,9 @@
     params: ['verifyInvalidClass'],
 
     bind () {
-      if (this.modifiers.parent) {
-        this.hasVerify = Boolean(this.vm.$parent.$options.vuerify)
-      } else {
-        this.hasVerify = Boolean(this.vm.$options.vuerify)
-      }
+      this.hasVerify = this.modifiers.parent
+        ? Boolean(this.vm.$parent.$options.vuerify)
+        : Boolean(this.vm.$options.vuerify)
       this.errorClass = this.params.verifyErrorClass || 'vuerify-invalid'
     },
 
@@ -88,28 +86,32 @@
     regex.message = rule.message || regex.message
 
     const oldError = this.$vuerify.$errors[field]
-    const result = _toString.call(regex.test) === '[object Function]'
+    const valid = _toString.call(regex.test) === '[object Function]'
       ? regex.test.call(this, value)
       : regex.test.test(value)
 
-    if (result) {
+    if (valid) {
       Vue$2.delete(this.$vuerify.$errors, field)
     } else if (!oldError) {
       Vue$2.set(this.$vuerify.$errors, field, regex.message)
     }
 
-    const invalid = Boolean(Object.keys(this.$vuerify.$errors).length)
+    const hasErrors = Boolean(Object.keys(this.$vuerify.$errors).length)
 
-    this.$vuerify.valid = !invalid
-    this.$vuerify.invalid = invalid
+    this.$vuerify.valid = !hasErrors
+    this.$vuerify.invalid = hasErrors
+
+    return valid
   }
 
   function checkAll (fields) {
     const vm = this.vm
 
     fields = fields || Object.keys(vm.$options.vuerify)
-    fields.forEach(field => check.call(vm, field, vm._data[field]))
-    return this
+
+    return fields.map(field =>
+      check.call(vm, field, vm._data[field])
+    ).indexOf(false) === -1
   }
 
   class Vuerify {
