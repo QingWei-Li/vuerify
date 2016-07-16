@@ -1,3 +1,5 @@
+import Vue from 'vue'
+
 new Vue({ // eslint-disable-line
   el: '#app',
 
@@ -35,7 +37,7 @@ new Vue({ // eslint-disable-line
 
   methods: {
     handleSubmit () {
-      if (this.$vuerify.check(['username', 'password']).valid) {
+      if (this.$vuerify.check().valid) {
         alert(`welcome ${this.username}`) // eslint-disable-line
       }
     }

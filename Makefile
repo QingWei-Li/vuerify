@@ -1,10 +1,15 @@
 default: dev
 
+.PHONY: dist
+
 dev:
 	npm run dev
 
-dist: lint
+dist:
 	npm run dist
+
+deploy:
+	npm run deploy
 
 lint:
 	npm run lint

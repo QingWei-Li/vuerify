@@ -4,7 +4,9 @@ import vuerifyInit from './vuerify'
 let Vue
 function install (_Vue) {
   if (Vue) {
-    console.warn('[Vuerify] 一次')
+    console.warn(
+      '[Vuerify] already installed. Vue.use(Vuerify) should be called only once.'
+    )
     return
   }
 

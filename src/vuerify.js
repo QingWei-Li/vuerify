@@ -14,7 +14,7 @@ function check (field, value) {
       : rule)
 
   if (!regex || !regex.test) {
-    console.warn('[vuerify] 校验规则不存在 ' + rule)
+    console.warn('[vuerify] rule does not exist: ' + rule)
     return
   }
 
@@ -38,7 +38,7 @@ function check (field, value) {
 function checkAll (fields) {
   const vm = this.vm
 
-  fields = fields || vm.$options.vuerify
+  fields = fields || Object.keys(vm.$options.vuerify)
   fields.forEach(field => check.call(vm, field, vm._data[field]))
   return this
 }

@@ -11,25 +11,25 @@
 
     bind () {
       if (this.modifiers.parent) {
-        this.hasVerify = this.vm.$parent.$options.vuerify
+        this.hasVerify = Boolean(this.vm.$parent.$options.vuerify)
       } else {
-        this.hasVerify = this.vm.$options.vuerify
+        this.hasVerify = Boolean(this.vm.$options.vuerify)
       }
       this.errorClass = this.params.verifyErrorClass || 'vuerify-invalid'
     },
 
     update (id) {
-      if (!this.hasVerify) {
-        return
-      }
+      if (!this.hasVerify) return
+
       const vm = this.modifiers.parent
         ? this.vm.$parent
         : this.vm
 
-      this.vm.$on('focus', () => {
+      Vue$1.util.on(this.el, 'focus', () => {
         Vue$1.util.removeClass(this.el, this.errorClass)
-      })
-      this.vm.$on('blur', () => {
+      }, true)
+
+      Vue$1.util.on(this.el, 'blur', () => {
         const err = vm.$vuerify.$errors[id]
 
         if (err) {
@@ -39,7 +39,7 @@
           Vue$1.util.removeClass(this.el, this.errorClass)
           vm.$emit('vuerify-valid', id)
         }
-      })
+      }, true)
     },
 
     unbind () {
@@ -78,7 +78,7 @@
         : rule)
 
     if (!regex || !regex.test) {
-      console.warn('[vuerify] 校验规则不存在 ' + rule)
+      console.warn('[vuerify] rule does not exist: ' + rule)
       return
     }
 
@@ -102,7 +102,7 @@
   function checkAll (fields) {
     const vm = this.vm
 
-    fields = fields || vm.$options.vuerify
+    fields = fields || Object.keys(vm.$options.vuerify)
     fields.forEach(field => check.call(vm, field, vm._data[field]))
     return this
   }
@@ -143,7 +143,9 @@
   let Vue
   function install (_Vue) {
     if (Vue) {
-      console.warn('[Vuerify] 一次')
+      console.warn(
+        '[Vuerify] already installed. Vue.use(Vuerify) should be called only once.'
+      )
       return
     }
 
