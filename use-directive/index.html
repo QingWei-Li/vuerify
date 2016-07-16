@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>signup</title>
+  <script src="//github.elemecdn.com/vuejs/vue/v1.0.26/dist/vue.min.js"></script>
+  <style>
+    label {
+      min-width: 100px;
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    input, textarea {
+      border: 0;
+      outline: 0;
+    }
+
+    .form-item {
+      margin: 5px 0;
+    }
+
+    .input {
+      display: inline-block;
+    }
+
+    .input input {
+      border: 1px solid #ccc;
+      height: 22px;
+    }
+
+    .textarea {
+      border: 1px solid #ccc;
+      display: inline-block;
+    }
+
+    .textarea.vuerify-invalid {
+      border-color: red;
+    }
+
+    .vuerify-invalid input {
+      border-color: red;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <form @submit.prevent="handleSubmit">
+      <div class="form-item">
+        <label>username</label>
+        <x-input class="input" :value.sync="username" field="username"></x-input>
+      </div>
+
+      <div class="form-item">
+        <label>email</label>
+        <x-input class="input" :value.sync="email" field="email"></x-input>
+      </div>
+
+      <div class="form-item">
+        <label>birthday</label>
+        <x-input class="input" :value.sync="birthday" field="birthday"></x-input>
+      </div>
+
+      <div class="form-item">
+        <label>bio</label>
+        <x-textarea class="textarea" v-vuerify="'bio'" :value.sync="bio"></x-textarea>
+        <span v-text="errors.bio"></span>
+      </div>
+
+      <div class="form-item">
+        <input type="submit">
+      </div>
+    </form>
+  </div>
+<script type="text/javascript" src="/vuerify/vuerify.08aea05.js"></script><script type="text/javascript" src="/vuerify/use-directive.1530571.js"></script></body>
+</html>

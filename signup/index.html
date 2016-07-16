@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>signup</title>
+  <script src="//github.elemecdn.com/vuejs/vue/v1.0.26/dist/vue.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <form @submit.prevent="handleSubmit">
+      <input type="email" v-model="username" placeholder="username">
+      <input type="password" v-model="password" placeholder="password">
+      <input type="password" v-model="conform" placeholder="conform">
+      <input type="submit" :disabled="invalid">
+    </form>
+    <ul>
+      <li v-for="err in erros" v-text="err"></li>
+    </ul>
+  </div>
+<script type="text/javascript" src="/vuerify/vuerify.08aea05.js"></script><script type="text/javascript" src="/vuerify/signup.7e1000e.js"></script></body>
+</html>
