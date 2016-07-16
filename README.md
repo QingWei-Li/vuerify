@@ -9,8 +9,8 @@
 - Simple
 
 ## Demo
-- [basic](qingwei-li.github.io/vuerify/signup)
-- [use directive](qingwei-li.github.io/vuerify/use-directive)
+- [basic](https://qingwei-li.github.io/vuerify/signup)
+- [use directive](https://qingwei-li.github.io/vuerify/use-directive)
 
 ## Installation
 ```shell
