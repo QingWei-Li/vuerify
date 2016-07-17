@@ -1,6 +1,6 @@
 {
   "name": "v-vuerify-next",
-  "version": "0.0.0",
+  "version": "0.1.1",
   "description": "Vuerify directive for Vue 2.0",
   "main": "dist/vuerify.common.js",
   "repository": {
