@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>directive</title>
-  <script src="//github.elemecdn.com/vuejs/vue/v1.0.26/dist/vue.min.js"></script>
+  <title>directive for Vue2.0</title>
+  <script src="//github.elemecdn.com/vuejs/vue/v2.0.0-beta.1/dist/vue.min.js"></script>
   <style>
     label {
       min-width: 100px;
@@ -21,11 +21,8 @@
     }
 
     .input {
-      display: inline-block;
-    }
-
-    .input input {
       border: 1px solid #ccc;
+      display: inline-block;
       height: 22px;
     }
 
@@ -34,37 +31,40 @@
       display: inline-block;
     }
 
-    .textarea.vuerify-invalid {
+    .textarea.error {
       border-color: red;
     }
 
-    .vuerify-invalid input {
+    .vuerify-invalid {
       border-color: red;
     }
   </style>
 </head>
 <body>
-  <h1>directive for Vue1.x</h1>
+  <h1>directive for Vue2.0</h1>
   <div id="app">
     <form @submit.prevent="handleSubmit">
       <div class="form-item">
         <label>username</label>
-        <x-input class="input" :value.sync="username" field="username"></x-input>
+        <input class="input" v-model="username" v-vuerify="'username'"></input>
+        <span v-text="errors.username"></span>
       </div>
 
       <div class="form-item">
         <label>email</label>
-        <x-input class="input" :value.sync="email" field="email"></x-input>
+        <input class="input" v-model="email" v-vuerify="'email'"></input>
+        <span v-text="errors.email"></span>
       </div>
 
       <div class="form-item">
         <label>birthday</label>
-        <x-input class="input" :value.sync="birthday" field="birthday"></x-input>
+        <input class="input" v-model="birthday" v-vuerify="'birthday'"></input>
+        <span v-text="errors.birthday"></span>
       </div>
 
       <div class="form-item">
         <label>bio</label>
-        <x-textarea class="textarea" v-vuerify="'bio'" :value.sync="bio"></x-textarea>
+        <textarea class="textarea" v-vuerify="'bio'" v-model="bio" vuerify-invalid-class="error"></textarea>
         <span v-text="errors.bio"></span>
       </div>
 
@@ -73,5 +73,5 @@
       </div>
     </form>
   </div>
-<script type="text/javascript" src="/vuerify/vuerify.84ed7e9.js"></script><script type="text/javascript" src="/vuerify/directive.2eadbd7.js"></script></body>
+<script type="text/javascript" src="/vuerify/vuerify.84ed7e9.js"></script><script type="text/javascript" src="/vuerify/directive-next.c917564.js"></script></body>
 </html>
