@@ -1,6 +1,6 @@
 {
   "name": "vuerify",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Validation plugin for Vue.js",
   "main": "dist/vuerify.common.js",
   "scripts": {
