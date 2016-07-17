@@ -1,6 +1,6 @@
 {
   "name": "v-vuerify",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Vuerify directive for Vue 1.x",
   "main": "dist/vuerify.common.js",
   "repository": {
@@ -9,7 +9,7 @@
   },
   "files": [
     "src",
-    "lib"
+    "dist"
   ],
   "scripts": {
     "dist": "rm -rf dist && rollup -c"

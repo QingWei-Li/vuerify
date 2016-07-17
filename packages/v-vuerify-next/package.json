@@ -9,7 +9,7 @@
   },
   "files": [
     "src",
-    "lib"
+    "dist"
   ],
   "scripts": {
     "dist": "rm -rf dist && rollup -c"
