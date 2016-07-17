@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import VuerifyDirective from 'v-vuerify'
+import VuerifyDirective from 'v-vuerify-next'
 
 Vue.use(VuerifyDirective)
 
@@ -12,26 +12,6 @@ new Vue({
       birthday: '',
       email: '',
       bio: ''
-    }
-  },
-
-  components: {
-    XInput: {
-      template: `
-        <span v-vuerify.parent="field">
-          <input v-model="value">
-          <span class="error" v-text="$parent.$vuerify.$errors[field]"></span>
-        </span>
-      `,
-      props: ['value', 'field']
-    },
-    XTextarea: {
-      template: `
-        <span>
-          <textarea v-model="value"></textarea>
-        </span>
-      `,
-      props: ['value']
     }
   },
 

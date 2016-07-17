@@ -5,6 +5,7 @@ var path = require('path')
 var examples = [
   'signup',
   'directive',
+  'directive-next',
   'mint-ui'
 ]
 
@@ -64,7 +65,9 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'vuerify': path.join(__dirname, '../src.index.js')
+      'vuerify': path.join(__dirname, '../src/index.js'),
+      'v-vuerify': path.join(__dirname, '../packages/v-vuerify/index.js'),
+      'v-vuerify-next': path.join(__dirname, '../packages/v-vuerify-next/index.js')
     }
   },
   babel: {

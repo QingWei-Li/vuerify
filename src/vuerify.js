@@ -14,7 +14,7 @@ function check (field, value) {
       : rule)
 
   if (!regex || !regex.test) {
-    console.warn('[vuerify] rule does not exist: ' + rule.test || rule)
+    console.warn('[vuerify] rule does not exist: ' + (rule.test || rule))
     return
   }
   regex.message = rule.message || regex.message
@@ -48,18 +48,17 @@ function checkAll (fields) {
   ).indexOf(false) === -1
 }
 
-class Vuerify {
-  constructor (_vm) {
-    this.vm = _vm
-  }
+const Vuerify = function (_vm) {
+  this.vm = _vm
+}
 
-  check (fields) {
-    return checkAll.call(this, fields)
-  }
+Vuerify.prototype.check = function (fields) {
+  return checkAll.call(this, fields)
+}
 
-  clear () {
-    this.$errors = {}
-  }
+Vuerify.prototype.clear = function () {
+  this.$errors = {}
+  return this
 }
 
 export default function (_Vue, _opts) {
@@ -73,6 +72,8 @@ export default function (_Vue, _opts) {
 
 function init () {
   const fields = this.$options.vuerify
+
+  /* istanbul ignore next */
   if (!fields) return
 
   this.$vuerify = new Vuerify(this)

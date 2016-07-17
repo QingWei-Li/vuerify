@@ -1,8 +1,8 @@
-import directive from './directive'
 import vuerifyInit from './vuerify'
 
 let Vue
-function install (_Vue) {
+function install (_Vue, opts) {
+  /* istanbul ignore next */
   if (Vue) {
     console.warn(
       '[Vuerify] already installed. Vue.use(Vuerify) should be called only once.'
@@ -11,13 +11,13 @@ function install (_Vue) {
   }
 
   Vue = _Vue
-  vuerifyInit(Vue)
+  vuerifyInit(Vue, opts)
 }
 
+/* istanbul ignore next */
 // auto install in dist mode
 if (typeof window !== 'undefined' && window.Vue) {
   install(window.Vue)
-  window.Vue.use(directive)
 }
 
-export default { directive, install }
+export default install

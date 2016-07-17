@@ -1,5 +1,5 @@
 # Vuerify
-[![Build Status](https://travis-ci.org/qingwei-li/vuerify.svg?branch=master)](https://travis-ci.org/qingwei-li/vuerify)
+[![Build Status](https://travis-ci.org/QingWei-Li/vuerify.svg?branch=master)](https://travis-ci.org/QingWei-Li/vuerify)
 [![npm](https://img.shields.io/npm/v/vuerify.svg?maxAge=3600)](https://www.npmjs.com/package/vuerify)
 [![Coverage Status](https://coveralls.io/repos/github/QingWei-Li/vuerify/badge.svg?branch=master)](https://coveralls.io/github/QingWei-Li/vuerify?branch=master)
 ![badge-size](https://badge-size.herokuapp.com/qingwei-li/vuerify/master/dist/vuerify.min.js)
@@ -15,6 +15,7 @@
 ## Demo
 - [basic](https://qingwei-li.github.io/vuerify/signup)
 - [directive](https://qingwei-li.github.io/vuerify/directive)
+- [directive for Vue2.0](https://qingwei-li.github.io/vuerify/directive-next)
 - [mint-ui](https://qingwei-li.github.io/vuerify/mint-ui)
 
 ## Docs
@@ -24,6 +25,15 @@
 ## Installation
 ```shell
 npm i vuerify -S
+```
+
+install directive
+```
+# Vue 1.x
+npm i v-vuerify -S
+
+# Vue 2.x
+npm i v-vuerify-next -S
 ```
 
 ## Usage
@@ -77,7 +87,7 @@ component
   methods: {
     handleSumit () {
       if (this.$vuerify.check()) {
-        // doing
+        // do sth
       }
     }
   }
@@ -85,7 +95,6 @@ component
 ```
 
 ## TODO
-- test
 - docs
 
 ## License

@@ -2,3 +2,7 @@ node_modules
 .DS_Store
 npm*
 examples/dist
+.coveralls.yml
+.nyc_output
+coverage
+lerna-debug*

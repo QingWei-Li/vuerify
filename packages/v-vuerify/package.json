@@ -1,0 +1,31 @@
+{
+  "name": "v-vuerify",
+  "version": "0.0.0",
+  "description": "Vuerify directive for Vue 1.x",
+  "main": "dist/vuerify.common.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qingwei-li/vuerify.git"
+  },
+  "files": [
+    "src",
+    "lib"
+  ],
+  "scripts": {
+    "dist": "rm -rf dist && rollup -c"
+  },
+  "keywords": [
+    "vue",
+    "vuerify"
+  ],
+  "author": "qingwei-li <cinwell.li@gmail.com>",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://github.com/qingwei-li/vuerify/issues"
+  },
+  "homepage": "https://github.com/qingwei-li/vuerify#readme",
+  "devDependencies": {
+    "babel-preset-es2015-rollup": "^1.1.1",
+    "rollup": "^0.34.1"
+  }
+}

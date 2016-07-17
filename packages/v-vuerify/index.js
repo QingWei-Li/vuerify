@@ -11,6 +11,7 @@ const Directive = {
   },
 
   update (id) {
+    /* istanbul ignore next */
     if (!this.hasVuerify) return
 
     const vm = this.modifiers.parent
@@ -40,6 +41,7 @@ const Directive = {
   }
 }
 
+/* istanbul ignore next */
 export default function install (_Vue, name = 'vuerify') {
   Vue = _Vue
   Vue.directive(name, Directive)

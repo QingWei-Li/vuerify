@@ -6,7 +6,7 @@ dev:
 	npm run dev
 
 dist:
-	npm run dist
+	npm run dist-all
 
 test:
 	npm test
