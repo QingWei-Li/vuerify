@@ -4,7 +4,7 @@
 ## Installation
 
 ```shell
-$ npm i v-vuerify-next -S
+$ npm i v-vuerify -S
 ```
 
 ## Usage
