@@ -15,6 +15,17 @@ new Vue({
     }
   },
 
+  components: {
+    XInput: {
+      template: '#x-input',
+      props: ['value', 'field']
+    },
+    XTextarea: {
+      template: '#x-textarea',
+      props: ['value']
+    }
+  },
+
   vuerify: {
     username: 'required',
     birthday: {

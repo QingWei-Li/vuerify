@@ -28,7 +28,7 @@ npm i vuerify -S
 ```
 
 install directive
-```
+```shell
 # Vue 1.x
 npm i v-vuerify -S
 
@@ -94,8 +94,14 @@ component
 }
 ```
 
+## Development
+```shell
+npm install
+npm run dev
+```
+
 ## TODO
-- docs
+- English Documentation
 
 ## License
 WTFPL
