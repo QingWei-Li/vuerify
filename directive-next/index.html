@@ -21,8 +21,11 @@
     }
 
     .input {
-      border: 1px solid #ccc;
       display: inline-block;
+    }
+
+    .input input {
+      border: 1px solid #ccc;
       height: 22px;
     }
 
@@ -31,11 +34,11 @@
       display: inline-block;
     }
 
-    .textarea.error {
+    .textarea.vuerify-invalid {
       border-color: red;
     }
 
-    .vuerify-invalid {
+    .vuerify-invalid input {
       border-color: red;
     }
   </style>
@@ -46,25 +49,22 @@
     <form @submit.prevent="handleSubmit">
       <div class="form-item">
         <label>username</label>
-        <input class="input" v-model="username" v-vuerify="'username'"></input>
-        <span v-text="errors.username"></span>
+        <x-input class="input" v-model="username" field="username"></x-input>
       </div>
 
       <div class="form-item">
         <label>email</label>
-        <input class="input" v-model="email" v-vuerify="'email'"></input>
-        <span v-text="errors.email"></span>
+        <x-input class="input" v-model="email" field="email"></x-input>
       </div>
 
       <div class="form-item">
         <label>birthday</label>
-        <input class="input" v-model="birthday" v-vuerify="'birthday'"></input>
-        <span v-text="errors.birthday"></span>
+        <x-input class="input" v-model="birthday" field="birthday"></x-input>
       </div>
 
       <div class="form-item">
         <label>bio</label>
-        <textarea class="textarea" v-vuerify="'bio'" v-model="bio" vuerify-invalid-class="error"></textarea>
+        <x-textarea class="textarea" v-vuerify="'bio'" v-model="bio"></x-textarea>
         <span v-text="errors.bio"></span>
       </div>
 
@@ -73,5 +73,18 @@
       </div>
     </form>
   </div>
-<script type="text/javascript" src="/vuerify/vuerify.84ed7e9.js"></script><script type="text/javascript" src="/vuerify/directive-next.c917564.js"></script></body>
+
+  <script id="x-input" type="text/x-template">
+    <span v-vuerify.parent="field">
+      <input :value="value" @change="$emit('input', $event.target.value)">
+      <span class="error" v-text="$parent.$vuerify.$errors[field]"></span>
+    </span>
+  </script>
+
+  <script id="x-textarea" type="text/x-template">
+    <span>
+      <textarea :value="value" @change="$emit('input', $event.target.value)"></textarea>
+    </span>
+  </script>
+<script type="text/javascript" src="/vuerify/vuerify.1ab98ea.js"></script><script type="text/javascript" src="/vuerify/directive-next.eb3ead5.js"></script></body>
 </html>
