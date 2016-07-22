@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/QingWei-Li/vuerify.svg?branch=master)](https://travis-ci.org/QingWei-Li/vuerify)
 [![npm](https://img.shields.io/npm/v/vuerify.svg?maxAge=3600)](https://www.npmjs.com/package/vuerify)
 [![Coverage Status](https://coveralls.io/repos/github/QingWei-Li/vuerify/badge.svg?branch=master)](https://coveralls.io/github/QingWei-Li/vuerify?branch=master)
-![badge-size](https://badge-size.herokuapp.com/qingwei-li/vuerify/master/dist/vuerify.min.js)
+![badge-size](https://badge-size.herokuapp.com/qingwei-li/vuerify/master/dist/vuerify.min.js?compression=gzip)
 
 > Validation plugin for Vue.js
 
