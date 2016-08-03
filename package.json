@@ -4,7 +4,6 @@
   "description": "Validation plugin for Vue.js",
   "main": "dist/vuerify.common.js",
   "scripts": {
-    "install": "lerna bootstrap",
     "test": "npm run dist-all && nyc ava",
     "dist": "rm -rf dist && npm run lint && rollup -c && uglifyjs ./dist/vuerify.js -cm > ./dist/vuerify.min.js",
     "lerna:dist": "lerna run dist",
