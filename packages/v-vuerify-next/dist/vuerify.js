@@ -2,97 +2,97 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global.Vuerify = global.Vuerify || {}, global.Vuerify.directive = factory());
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
-  /* @flow */
+/* @flow */
 
-  /**
-   * Add class with compatibility for SVG since classList is not supported on
-   * SVG elements in IE
-   */
-  function addClass(el, cls) {
-    /* istanbul ignore else */
-    if (el.classList) {
-      if (cls.indexOf(' ') > -1) {
-        cls.split(/\s+/).forEach(function (c) {
-          return el.classList.add(c);
-        });
-      } else {
-        el.classList.add(cls);
-      }
+/**
+ * Add class with compatibility for SVG since classList is not supported on
+ * SVG elements in IE
+ */
+function addClass(el, cls) {
+  /* istanbul ignore else */
+  if (el.classList) {
+    if (cls.indexOf(' ') > -1) {
+      cls.split(/\s+/).forEach(function (c) {
+        return el.classList.add(c);
+      });
     } else {
-      var cur = ' ' + el.getAttribute('class') + ' ';
-      if (cur.indexOf(' ' + cls + ' ') < 0) {
-        el.setAttribute('class', (cur + cls).trim());
-      }
+      el.classList.add(cls);
+    }
+  } else {
+    var cur = ' ' + el.getAttribute('class') + ' ';
+    if (cur.indexOf(' ' + cls + ' ') < 0) {
+      el.setAttribute('class', (cur + cls).trim());
     }
   }
+}
 
-  /**
-   * Remove class with compatibility for SVG since classList is not supported on
-   * SVG elements in IE
-   */
-  function removeClass(el, cls) {
-    /* istanbul ignore else */
-    if (el.classList) {
-      if (cls.indexOf(' ') > -1) {
-        cls.split(/\s+/).forEach(function (c) {
-          return el.classList.remove(c);
-        });
-      } else {
-        el.classList.remove(cls);
-      }
+/**
+ * Remove class with compatibility for SVG since classList is not supported on
+ * SVG elements in IE
+ */
+function removeClass(el, cls) {
+  /* istanbul ignore else */
+  if (el.classList) {
+    if (cls.indexOf(' ') > -1) {
+      cls.split(/\s+/).forEach(function (c) {
+        return el.classList.remove(c);
+      });
     } else {
-      var cur = ' ' + el.getAttribute('class') + ' ';
-      var tar = ' ' + cls + ' ';
-      while (cur.indexOf(tar) >= 0) {
-        cur = cur.replace(tar, ' ');
-      }
-      el.setAttribute('class', cur.trim());
+      el.classList.remove(cls);
     }
+  } else {
+    var cur = ' ' + el.getAttribute('class') + ' ';
+    var tar = ' ' + cls + ' ';
+    while (cur.indexOf(tar) >= 0) {
+      cur = cur.replace(tar, ' ');
+    }
+    el.setAttribute('class', cur.trim());
   }
+}
 
-  var Directive = {
-    bind: function bind(el, binding, _ref) {
-      var context = _ref.context;
+var Directive = {
+  bind: function bind(el, binding, _ref) {
+    var context = _ref.context;
 
-      var hasVuerify = binding.modifiers.parent ? Boolean(context.$parent.$options.vuerify) : Boolean(context.$options.vuerify);
-      var errorClass = el.getAttribute('vuerify-invalid-class') || 'vuerify-invalid';
+    var hasVuerify = binding.modifiers.parent ? Boolean(context.$parent.$options.vuerify) : Boolean(context.$options.vuerify);
+    var errorClass = el.getAttribute('vuerify-invalid-class') || 'vuerify-invalid';
 
-      if (!hasVuerify) return;
+    if (!hasVuerify) return;
 
-      var vm = binding.modifiers.parent ? context.$parent : context;
+    var vm = binding.modifiers.parent ? context.$parent : context;
 
-      el.addEventListener('focus', function () {
+    el.addEventListener('focus', function () {
+      removeClass(el, errorClass);
+    }, true);
+
+    el.addEventListener('blur', function () {
+      var err = vm.$vuerify.$errors[binding.value];
+
+      if (err) {
+        addClass(el, errorClass);
+        vm.$emit('vuerify-invalid', binding.value, err);
+      } else {
         removeClass(el, errorClass);
-      }, true);
-
-      el.addEventListener('blur', function () {
-        var err = vm.$vuerify.$errors[binding.value];
-
-        if (err) {
-          addClass(el, errorClass);
-          vm.$emit('vuerify-invalid', binding.value, err);
-        } else {
-          removeClass(el, errorClass);
-          vm.$emit('vuerify-valid', binding.value);
-        }
-      }, true);
-    },
-    unbind: function unbind(el) {
-      el.removeEventListener('blur');
-      el.removeEventListener('focus');
-    }
-  };
-
-  function install(_Vue) {
-    var name = arguments.length <= 1 || arguments[1] === undefined ? 'vuerify' : arguments[1];
-
-    return _Vue.directive(name, Directive);
+        vm.$emit('vuerify-valid', binding.value);
+      }
+    }, true);
+  },
+  unbind: function unbind(el) {
+    el.removeEventListener('blur');
+    el.removeEventListener('focus');
   }
+};
 
-  var index = { install: install, Directive: Directive };
+function install(_Vue) {
+  var name = arguments.length <= 1 || arguments[1] === undefined ? 'vuerify' : arguments[1];
 
-  return index;
+  return _Vue.directive(name, Directive);
+}
 
-}));
+var index = { install: install, Directive: Directive };
+
+return index;
+
+})));
