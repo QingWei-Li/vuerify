@@ -33,7 +33,6 @@ var Directive = {
         Vue.util.addClass(this$1.el, this$1.errorClass)
         vm.$emit('vuerify-invalid', id, err)
       } else {
-        console.log(123)
         Vue.util.removeClass(this$1.el, this$1.errorClass)
         vm.$emit('vuerify-valid', id)
       }

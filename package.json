@@ -11,6 +11,7 @@
     "dev": "webpack-dev-server --config examples/webpack.config.js --inline --hot --port 8666",
     "deploy": "rm -rf examples/dist && NODE_ENV=production webpack --config examples/webpack.config.js --progress && gh-pages -d examples/dist",
     "lint": "eslint src examples",
+    "pub-all": "lerna publish",
     "preversion": "npm test"
   },
   "files": [
