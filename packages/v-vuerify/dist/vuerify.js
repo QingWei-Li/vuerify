@@ -2,55 +2,62 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global.Vuerify = global.Vuerify || {}, global.Vuerify.directive = factory());
-}(this, (function () { 'use strict';
+}(this, function () { 'use strict';
 
-var Vue = void 0;
+  var Vue
 
-var Directive = {
-  params: ['vuerifyInvalidClass'],
+  var Directive = {
+    params: ['vuerifyInvalidClass'],
 
-  bind: function bind() {
-    this.hasVuerify = this.modifiers.parent ? Boolean(this.vm.$parent.$options.vuerify) : Boolean(this.vm.$options.vuerify);
-    this.errorClass = this.params.vuerifyInvalidClass || 'vuerify-invalid';
-  },
-  update: function update(id) {
-    var _this = this;
+    bind: function bind () {
+      this.hasVuerify = this.modifiers.parent
+        ? Boolean(this.vm.$parent.$options.vuerify)
+        : Boolean(this.vm.$options.vuerify)
+      this.errorClass = this.params.vuerifyInvalidClass || 'vuerify-invalid'
+    },
 
-    /* istanbul ignore next */
-    if (!this.hasVuerify) return;
+    update: function update (id) {
+      var this$1 = this;
 
-    var vm = this.modifiers.parent ? this.vm.$parent : this.vm;
+      /* istanbul ignore next */
+      if (!this.hasVuerify) { return }
 
-    Vue.util.on(this.el, 'focus', function () {
-      Vue.util.removeClass(_this.el, _this.errorClass);
-    }, true);
+      var vm = this.modifiers.parent
+        ? this.vm.$parent
+        : this.vm
 
-    Vue.util.on(this.el, 'blur', function () {
-      var err = vm.$vuerify.$errors[id];
+      Vue.util.on(this.el, 'focus', function () {
+        Vue.util.removeClass(this$1.el, this$1.errorClass)
+      }, true)
 
-      if (err) {
-        Vue.util.addClass(_this.el, _this.errorClass);
-        vm.$emit('vuerify-invalid', id, err);
-      } else {
-        Vue.util.removeClass(_this.el, _this.errorClass);
-        vm.$emit('vuerify-valid', id);
-      }
-    }, true);
-  },
-  unbind: function unbind() {
-    Vue.util.off(this.el, 'blur');
-    Vue.util.off(this.el, 'focus');
+      Vue.util.on(this.el, 'blur', function () {
+        var err = vm.$vuerify.$errors[id]
+
+        if (err) {
+          Vue.util.addClass(this$1.el, this$1.errorClass)
+          vm.$emit('vuerify-invalid', id, err)
+        } else {
+          console.log(123)
+          Vue.util.removeClass(this$1.el, this$1.errorClass)
+          vm.$emit('vuerify-valid', id)
+        }
+      }, true)
+    },
+
+    unbind: function unbind () {
+      Vue.util.off(this.el, 'blur')
+      Vue.util.off(this.el, 'focus')
+    }
   }
-};
 
-/* istanbul ignore next */
-function install(_Vue) {
-  var name = arguments.length <= 1 || arguments[1] === undefined ? 'vuerify' : arguments[1];
+  /* istanbul ignore next */
+  function install (_Vue, name) {
+    if ( name === void 0 ) name = 'vuerify';
 
-  Vue = _Vue;
-  Vue.directive(name, Directive);
-}
+    Vue = _Vue
+    Vue.directive(name, Directive)
+  }
 
-return install;
+  return install;
 
-})));
+}));

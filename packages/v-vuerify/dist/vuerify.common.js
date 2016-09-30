@@ -1,50 +1,57 @@
 'use strict';
 
-var Vue = void 0;
+var Vue
 
 var Directive = {
   params: ['vuerifyInvalidClass'],
 
-  bind: function bind() {
-    this.hasVuerify = this.modifiers.parent ? Boolean(this.vm.$parent.$options.vuerify) : Boolean(this.vm.$options.vuerify);
-    this.errorClass = this.params.vuerifyInvalidClass || 'vuerify-invalid';
+  bind: function bind () {
+    this.hasVuerify = this.modifiers.parent
+      ? Boolean(this.vm.$parent.$options.vuerify)
+      : Boolean(this.vm.$options.vuerify)
+    this.errorClass = this.params.vuerifyInvalidClass || 'vuerify-invalid'
   },
-  update: function update(id) {
-    var _this = this;
+
+  update: function update (id) {
+    var this$1 = this;
 
     /* istanbul ignore next */
-    if (!this.hasVuerify) return;
+    if (!this.hasVuerify) { return }
 
-    var vm = this.modifiers.parent ? this.vm.$parent : this.vm;
+    var vm = this.modifiers.parent
+      ? this.vm.$parent
+      : this.vm
 
     Vue.util.on(this.el, 'focus', function () {
-      Vue.util.removeClass(_this.el, _this.errorClass);
-    }, true);
+      Vue.util.removeClass(this$1.el, this$1.errorClass)
+    }, true)
 
     Vue.util.on(this.el, 'blur', function () {
-      var err = vm.$vuerify.$errors[id];
+      var err = vm.$vuerify.$errors[id]
 
       if (err) {
-        Vue.util.addClass(_this.el, _this.errorClass);
-        vm.$emit('vuerify-invalid', id, err);
+        Vue.util.addClass(this$1.el, this$1.errorClass)
+        vm.$emit('vuerify-invalid', id, err)
       } else {
-        Vue.util.removeClass(_this.el, _this.errorClass);
-        vm.$emit('vuerify-valid', id);
+        console.log(123)
+        Vue.util.removeClass(this$1.el, this$1.errorClass)
+        vm.$emit('vuerify-valid', id)
       }
-    }, true);
+    }, true)
   },
-  unbind: function unbind() {
-    Vue.util.off(this.el, 'blur');
-    Vue.util.off(this.el, 'focus');
+
+  unbind: function unbind () {
+    Vue.util.off(this.el, 'blur')
+    Vue.util.off(this.el, 'focus')
   }
-};
+}
 
 /* istanbul ignore next */
-function install(_Vue) {
-  var name = arguments.length <= 1 || arguments[1] === undefined ? 'vuerify' : arguments[1];
+function install (_Vue, name) {
+  if ( name === void 0 ) name = 'vuerify';
 
-  Vue = _Vue;
-  Vue.directive(name, Directive);
+  Vue = _Vue
+  Vue.directive(name, Directive)
 }
 
 module.exports = install;

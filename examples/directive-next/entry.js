@@ -1,6 +1,8 @@
 import Vue from 'vue'
+import Vuerify from 'vuerify'
 import VuerifyDirective from 'v-vuerify-next'
 
+Vue.use(Vuerify)
 Vue.use(VuerifyDirective)
 
 new Vue({
@@ -52,6 +54,7 @@ new Vue({
       if (this.$vuerify.check()) {
         alert(`welcome ${this.username}`) // eslint-disable-line
       }
+      console.log(this.$vuerify.all())
     }
   }
 })

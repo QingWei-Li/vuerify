@@ -2,4 +2,5 @@ language: node_js
 node_js:
   - 'stable'
 after_success:
+  - npm i coveralls
   - './node_modules/.bin/nyc report --reporter=text-lcov | ./node_modules/.bin/coveralls'

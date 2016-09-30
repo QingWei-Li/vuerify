@@ -1,6 +1,8 @@
 import Vue from 'vue'
+import Vuerify from 'vuerify'
 import VuerifyDirective from 'v-vuerify'
 
+Vue.use(Vuerify)
 Vue.use(VuerifyDirective)
 
 new Vue({
@@ -36,7 +38,13 @@ new Vue({
   },
 
   vuerify: {
-    username: 'required',
+    username: [
+      'required',
+      {
+        test: /\w{4,}/,
+        message: '四个字符啊大哥'
+      }
+    ],
     birthday: {
       test (val) {
         return /\d{4}-\d{1,2}-\d{1,2}/.test(val) && Date.parse(val)

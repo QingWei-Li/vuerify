@@ -1,4 +1,7 @@
 import Vue from 'vue'
+import Vuerify from 'vuerify'
+
+Vue.use(Vuerify)
 
 new Vue({ // eslint-disable-line
   el: '#app',

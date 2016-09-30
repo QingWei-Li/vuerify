@@ -1,11 +1,9 @@
+import buble from 'rollup-plugin-buble'
+
 export default {
   entry: 'index.js',
   moduleName: 'Vuerify.directive',
-  plugins: [
-    require('rollup-plugin-babel')({
-      presets: ['es2015-rollup']
-    })
-  ],
+  plugins: [buble()],
   targets: [
     { format: 'cjs', dest: 'dist/vuerify.common.js' },
     { format: 'umd', dest: 'dist/vuerify.js' }

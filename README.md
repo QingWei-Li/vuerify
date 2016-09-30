@@ -1,3 +1,5 @@
+<p align="center"><img src="media/logo.png" width="200"></p>
+
 # Vuerify
 [![Build Status](https://travis-ci.org/QingWei-Li/vuerify.svg?branch=master)](https://travis-ci.org/QingWei-Li/vuerify)
 [![npm](https://img.shields.io/npm/v/vuerify.svg?maxAge=3600)](https://www.npmjs.com/package/vuerify)
@@ -20,7 +22,6 @@
 
 ## Docs
 - [中文文档](https://github.com/QingWei-Li/vuerify/wiki/%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3)
-- [Documentation](https://github.com/QingWei-Li/vuerify/wiki/Documentation)
 
 ## Installation
 ```shell
@@ -41,7 +42,7 @@ npm i v-vuerify-next -S
 import Vue from 'vue'
 import Vuerify from 'vuerify'
 
-Vue.use(Vuerify, /* add rules */)
+Vue.use(Vuerify /*, add rules */)
 ```
 
 component

@@ -55,7 +55,7 @@ module.exports = {
     loaders: [
       {
         test: /\.js$/,
-        loader: 'babel',
+        loader: 'buble',
         exclude: /node_modules/
       }
     ]
@@ -69,10 +69,6 @@ module.exports = {
       'v-vuerify': path.join(__dirname, '../packages/v-vuerify/index.js'),
       'v-vuerify-next': path.join(__dirname, '../packages/v-vuerify-next/index.js')
     }
-  },
-  babel: {
-    presets: ['es2015'],
-    plugins: [['component', { 'libraryName': 'mint-ui' }]]
   },
   plugins: plugins
 }

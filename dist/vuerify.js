@@ -1,12 +1,14 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-  typeof define === 'function' && define.amd ? define(factory) :
-  (global.Vuerify = factory());
-}(this, (function () { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('object-assign')) :
+  typeof define === 'function' && define.amd ? define(['object-assign'], factory) :
+  (global.Vuerify = factory(global.Object.assign));
+}(this, (function (objectAssign) { 'use strict';
+
+objectAssign = 'default' in objectAssign ? objectAssign['default'] : objectAssign;
 
 var RULES = {
   email: {
-    test: /^(([^<>()[\]\\.,;:\s"]+(\.[^<>()[\]\\.,;:\s"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+    test: /.+@.+\..+/,
     message: '邮箱格式错误'
   },
   required: {
@@ -14,131 +16,124 @@ var RULES = {
     message: '必填项'
   },
   url: {
-    test: /^(https?|ftp|rmtp|mms):\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)(:(\d+))?\/?/i,
+    test: /^(?:\w+:)?\/\/([^\s\.]+\.\S{2}|localhost[:?\d]*)\S*$/,
     message: 'URL 格式错误'
   }
-};
+}
 
-var _toString = Object.prototype.toString;
-var Vue$1 = void 0;
+/**
+ * check value type
+ * @param  {String}  type
+ * @param  {*}  val
+ * @return {Boolean}
+ */
+function is (type, val) {
+  return Object.prototype.toString.call(val) === ("[object " + type + "]")
+}
 
-function check(field, value) {
-  var $rules = this.$vuerify.$rules;
-  var fields = this.$options.vuerify;
-  var rule = fields[field];
-  var regex = _toString.call(rule) === '[object String]' ? $rules[rule] : _toString.call(rule.test) === '[object String]' ? $rules[rule.test] : rule;
+var Vue
+
+function check (rule, field, value, isArray) {
+  var this$1 = this;
+
+  if (Array.isArray(rule)) {
+    return rule.map(function (item) { return check.call(this$1, item, field, value, true); }
+      ).indexOf(false) === -1
+  }
+
+  var $rules = this.$vuerify.$rules
+  var $errors = this.$vuerify.$errors
+  var regex = is('String', rule)
+    ? $rules[rule]
+    : (is('String', rule.test) ? $rules[rule.test] : rule)
 
   if (!regex || !regex.test) {
-    console.warn('[vuerify] rule does not exist: ' + (rule.test || rule));
-    return;
+    console.warn('[vuerify] rule does not exist: ' + (rule.test || rule))
+    return
   }
-  regex.message = rule.message || regex.message;
+  regex.message = rule.message || regex.message
 
-  var oldError = this.$vuerify.$errors[field];
-  var valid = _toString.call(regex.test) === '[object Function]' ? regex.test.call(this, value) : regex.test.test(value);
+  var valid = is('Function', regex.test)
+    ? regex.test.call(this, value)
+    : regex.test.test(value)
 
-  if (valid) {
-    Vue$1.delete(this.$vuerify.$errors, field);
-  } else if (!oldError) {
-    Vue$1.set(this.$vuerify.$errors, field, regex.message);
+  if (!isArray) {
+    var oldError = $errors[field]
+
+    if (valid) {
+      Vue.delete($errors, field)
+    } else if (!oldError) {
+      $errors[field] = regex.message
+    }
+  } else {
+    var error = $errors[field] || []
+    var oldError$1 = error.indexOf(regex.message)
+
+    if (valid) {
+      error.splice(oldError$1, 1)
+      if (!error.length) { Vue.delete($errors, field) }
+    } else if (oldError$1 < 0) {
+      error.push(regex.message)
+      Vue.set($errors, field, error)
+    }
   }
 
-  var hasError = Boolean(Object.keys(this.$vuerify.$errors).length);
+  var hasError = Boolean(Object.keys($errors).length)
 
-  this.$vuerify.valid = !hasError;
-  this.$vuerify.invalid = hasError;
+  this.$vuerify.valid = !hasError
+  this.$vuerify.invalid = hasError
 
-  return valid;
+  return valid
 }
 
-function checkAll(fields) {
-  var vm = this.vm;
+function init () {
+  var this$1 = this;
 
-  fields = fields || Object.keys(vm.$options.vuerify);
+  var rules = this.$options.vuerify
 
-  return fields.map(function (field) {
-    return check.call(vm, field, vm._data[field]);
-  }).indexOf(false) === -1;
+  /* istanbul ignore next */
+  if (!rules) { return }
+
+  this.$vuerify = new Vuerify(this)
+  Object.keys(rules).forEach(function (field) { return this$1.$watch(field, function (value) { return check.call(this$1, rules[field], field, value); }); }
+  )
 }
 
-var Vuerify = function Vuerify(_vm) {
-  this.vm = _vm;
-};
+var Vuerify = function (_vm) {
+  this.vm = _vm
+}
 
 Vuerify.prototype.check = function (fields) {
-  return checkAll.call(this, fields);
-};
+  var vm = this.vm
+  var rules = vm.$options.vuerify
+
+  fields = fields || Object.keys(rules)
+
+  return fields.map(function (field) { return check.call(vm, rules[field], field, vm._data[field]); }
+  ).indexOf(false) === -1
+}
 
 Vuerify.prototype.clear = function () {
-  this.$errors = {};
-  return this;
-};
-
-function vuerifyInit (_Vue, _opts) {
-  Vue$1 = _Vue;
-  Vuerify.prototype.$rules = Object.assign({}, RULES, _opts);
-  Vue$1.util.defineReactive(Vuerify.prototype, '$errors', {});
-  Vue$1.util.defineReactive(Vuerify.prototype, 'invalid', true);
-  Vue$1.util.defineReactive(Vuerify.prototype, 'valid', false);
-  Vue$1.mixin({ created: init });
+  this.$errors = {}
+  return this
 }
 
-function init() {
-  var _this = this;
-
-  var fields = this.$options.vuerify;
-
-  /* istanbul ignore next */
-  if (!fields) return;
-
-  this.$vuerify = new Vuerify(this);
-  Object.keys(fields).forEach(function (field) {
-    return _this.$watch(field, function (value) {
-      return check.call(_this, field, value);
-    });
-  });
+var vuerifyInit = function (_Vue, opts) {
+  Vue = _Vue
+  Vuerify.prototype.$rules = objectAssign({}, RULES, opts)
+  Vue.util.defineReactive(Vuerify.prototype, '$errors', {})
+  Vue.util.defineReactive(Vuerify.prototype, 'invalid', true)
+  Vue.util.defineReactive(Vuerify.prototype, 'valid', false)
+  Vue.mixin({ created: init })
 }
 
-/* polyfill Object.assign */
-if (typeof Object.assign !== 'function') {
-  Object.assign = function (target) {
-    'use strict';
-
-    if (target == null) {
-      throw new TypeError('Cannot convert undefined or null to object');
-    }
-
-    target = Object(target);
-    for (var index = 1; index < arguments.length; index++) {
-      var source = arguments[index];
-      if (source != null) {
-        for (var key in source) {
-          if (Object.prototype.hasOwnProperty.call(source, key)) {
-            target[key] = source[key];
-          }
-        }
-      }
-    }
-    return target;
-  };
-}
-
-var Vue = void 0;
-function install(_Vue, opts) {
-  /* istanbul ignore next */
-  if (Vue) {
-    console.warn('[Vuerify] already installed. Vue.use(Vuerify) should be called only once.');
-    return;
-  }
-
-  Vue = _Vue;
-  vuerifyInit(Vue, opts);
+function install (Vue, opts) {
+  vuerifyInit(Vue, opts)
 }
 
 /* istanbul ignore next */
-// auto install in dist mode
 if (typeof window !== 'undefined' && window.Vue) {
-  install(window.Vue);
+  if (!install.installed) { install(window.Vue) }
 }
 
 return install;

@@ -1,6 +1,10 @@
 import { Field, Button, MessageBox } from 'mint-ui'
+import Vuerify from 'vuerify'
+import Vue from 'vue'
 
-new Vue({
+Vue.use(Vuerify)
+
+new Vue({ // eslint-disable-line
   el: '#app',
   components: [Field, Button],
   data () {

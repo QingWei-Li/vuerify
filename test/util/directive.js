@@ -6,7 +6,7 @@ import Directive from '../../packages/v-vuerify/dist/vuerify.common.js'
 Vue.use(Vuerify)
 Vue.use(Directive)
 
-test('work', t => {
+test.cb('work', t => {
   const vm = new Vue({
     template: `<span>
       <input type="text" v-model="username" v-vuerify="'username'" />
@@ -30,11 +30,12 @@ test('work', t => {
   vm.$nextTick(_ => {
     inputEl.blur()
     t.is(inputEl.getAttribute('class'), 'vuerify-invalid')
-    vm.$destroy(true)
+    vm.$destroy()
+    t.end()
   })
 })
 
-test('parent', t => {
+test.cb('parent', t => {
   const vm = new Vue({
     template: `<span>
       <x-input :value.sync="username" field="username"></x-input>
@@ -66,13 +67,14 @@ test('parent', t => {
     inputEl.blur()
     t.is(inputEl.getAttribute('class'), 'vuerify-invalid')
     vm.$destroy(true)
+    t.end()
   })
 })
 
-test('class name', t => {
+test.cb('class name', t => {
   const vm = new Vue({
     template: `<span>
-      <input type="text" v-model="username" v-vuerify="'username'" vuerify-invalid-class = "error"/>
+      <input type="text" v-model="username" v-vuerify="'username'" vuerify-invalid-class="error"/>
     </span>`,
 
     vuerify: {
@@ -93,5 +95,14 @@ test('class name', t => {
   vm.$nextTick(_ => {
     inputEl.blur()
     t.is(inputEl.getAttribute('class'), 'error')
+    inputEl.focus()
+    vm.username = 'hi@qq.com'
+
+    vm.$nextTick(_ => {
+      inputEl.blur()
+      t.not(inputEl.getAttribute('class'), 'error')
+      vm.$destroy()
+      t.end()
+    })
   })
 })

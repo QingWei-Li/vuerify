@@ -1,17 +1,21 @@
 import RULES from './rules'
+import { is } from './utils'
+import objectAssign from 'object-assign'
 
-const _toString = Object.prototype.toString
 let Vue
 
-function check (field, value) {
+function check (rule, field, value, isArray) {
+  if (Array.isArray(rule)) {
+    return rule.map(item =>
+        check.call(this, item, field, value, true)
+      ).indexOf(false) === -1
+  }
+
   const $rules = this.$vuerify.$rules
-  const fields = this.$options.vuerify
-  const rule = fields[field]
-  const regex = _toString.call(rule) === '[object String]'
+  const $errors = this.$vuerify.$errors
+  const regex = is('String', rule)
     ? $rules[rule]
-    : (_toString.call(rule.test) === '[object String]'
-      ? $rules[rule.test]
-      : rule)
+    : (is('String', rule.test) ? $rules[rule.test] : rule)
 
   if (!regex || !regex.test) {
     console.warn('[vuerify] rule does not exist: ' + (rule.test || rule))
@@ -19,18 +23,32 @@ function check (field, value) {
   }
   regex.message = rule.message || regex.message
 
-  const oldError = this.$vuerify.$errors[field]
-  const valid = _toString.call(regex.test) === '[object Function]'
+  const valid = is('Function', regex.test)
     ? regex.test.call(this, value)
     : regex.test.test(value)
 
-  if (valid) {
-    Vue.delete(this.$vuerify.$errors, field)
-  } else if (!oldError) {
-    Vue.set(this.$vuerify.$errors, field, regex.message)
+  if (!isArray) {
+    const oldError = $errors[field]
+
+    if (valid) {
+      Vue.delete($errors, field)
+    } else if (!oldError) {
+      $errors[field] = regex.message
+    }
+  } else {
+    const error = $errors[field] || []
+    const oldError = error.indexOf(regex.message)
+
+    if (valid) {
+      error.splice(oldError, 1)
+      if (!error.length) Vue.delete($errors, field)
+    } else if (oldError < 0) {
+      error.push(regex.message)
+      Vue.set($errors, field, error)
+    }
   }
 
-  const hasError = Boolean(Object.keys(this.$vuerify.$errors).length)
+  const hasError = Boolean(Object.keys($errors).length)
 
   this.$vuerify.valid = !hasError
   this.$vuerify.invalid = hasError
@@ -38,14 +56,16 @@ function check (field, value) {
   return valid
 }
 
-function checkAll (fields) {
-  const vm = this.vm
+function init () {
+  const rules = this.$options.vuerify
 
-  fields = fields || Object.keys(vm.$options.vuerify)
+  /* istanbul ignore next */
+  if (!rules) return
 
-  return fields.map(field =>
-    check.call(vm, field, vm._data[field])
-  ).indexOf(false) === -1
+  this.$vuerify = new Vuerify(this)
+  Object.keys(rules).forEach(field =>
+    this.$watch(field, value => check.call(this, rules[field], field, value))
+  )
 }
 
 const Vuerify = function (_vm) {
@@ -53,7 +73,14 @@ const Vuerify = function (_vm) {
 }
 
 Vuerify.prototype.check = function (fields) {
-  return checkAll.call(this, fields)
+  const vm = this.vm
+  const rules = vm.$options.vuerify
+
+  fields = fields || Object.keys(rules)
+
+  return fields.map(field =>
+    check.call(vm, rules[field], field, vm._data[field])
+  ).indexOf(false) === -1
 }
 
 Vuerify.prototype.clear = function () {
@@ -61,46 +88,11 @@ Vuerify.prototype.clear = function () {
   return this
 }
 
-export default function (_Vue, _opts) {
+export default function (_Vue, opts) {
   Vue = _Vue
-  Vuerify.prototype.$rules = Object.assign({}, RULES, _opts)
+  Vuerify.prototype.$rules = objectAssign({}, RULES, opts)
   Vue.util.defineReactive(Vuerify.prototype, '$errors', {})
   Vue.util.defineReactive(Vuerify.prototype, 'invalid', true)
   Vue.util.defineReactive(Vuerify.prototype, 'valid', false)
   Vue.mixin({ created: init })
-}
-
-function init () {
-  const fields = this.$options.vuerify
-
-  /* istanbul ignore next */
-  if (!fields) return
-
-  this.$vuerify = new Vuerify(this)
-  Object.keys(fields).forEach(field =>
-    this.$watch(field, value => check.call(this, field, value))
-  )
-}
-
-/* polyfill Object.assign */
-if (typeof Object.assign !== 'function') {
-  Object.assign = function (target) {
-    'use strict'
-    if (target == null) {
-      throw new TypeError('Cannot convert undefined or null to object')
-    }
-
-    target = Object(target)
-    for (var index = 1; index < arguments.length; index++) {
-      var source = arguments[index]
-      if (source != null) {
-        for (var key in source) {
-          if (Object.prototype.hasOwnProperty.call(source, key)) {
-            target[key] = source[key]
-          }
-        }
-      }
-    }
-    return target
-  }
 }
