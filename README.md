@@ -49,11 +49,11 @@ component
 ```javascript
 {
   template: `
-    <form @submit.prevent="handleSumit">
+    <form @submit.prevent="handleSubmit">
       <input type="text" v-model="username">
       <input type="password" v-model="password">
       <input type="password" v-model="conform">
-      <input type="sumit">
+      <input type="submit">
       <ul><li v-for="err in errors" v-text="err"></li></ul>
     </form>
   `,
@@ -86,7 +86,7 @@ component
   },
 
   methods: {
-    handleSumit () {
+    handleSubmit () {
       if (this.$vuerify.check()) {
         // do sth
       }
