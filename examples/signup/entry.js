@@ -10,7 +10,8 @@ new Vue({ // eslint-disable-line
     return {
       username: '',
       password: '',
-      conform: ''
+      conform: '',
+      email: ''
     }
   },
 
@@ -28,7 +29,12 @@ new Vue({ // eslint-disable-line
         return val && !this.$vuerify.$errors.password && val === this.password
       },
       message: '两次密码输入不一致'
-    }
+    },
+    email: [ // 支持传入数组
+      'required',
+      'email',
+      { test: /@gmail\./, message: '只能是谷歌邮箱' }
+    ]
   },
 
   computed: {

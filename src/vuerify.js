@@ -40,7 +40,7 @@ function check (rule, field, value, isArray) {
     const oldError = error.indexOf(regex.message)
 
     if (valid) {
-      error.splice(oldError, 1)
+      oldError > -1 && error.splice(oldError, 1)
       if (!error.length) Vue.delete($errors, field)
     } else if (oldError < 0) {
       error.push(regex.message)
