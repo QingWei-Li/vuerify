@@ -45,7 +45,7 @@
   "devDependencies": {
     "ava": "^0.15.2",
     "buble-loader": "^0.3.0",
-    "eslint": "^3.0.1",
+    "eslint": "3.0.1",
     "eslint-config-vue": "^1.0.3",
     "eslint-plugin-html": "^1.5.3",
     "gh-pages": "^0.11.0",
