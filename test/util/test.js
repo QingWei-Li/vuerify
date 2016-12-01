@@ -132,23 +132,32 @@ test.cb('check', t => {
   const vm = new Vue({
     vuerify: {
       username: 'email',
-      password: 'required'
+      password: 'required',
+      'obj.key': 'required',
+      'obj.key2': 'required'
     },
 
     data () {
       return {
         username: '',
-        password: ''
+        password: '',
+        obj: {
+          key: '',
+          key2: ''
+        }
       }
     }
   })
 
   vm.username = 'abc'
   vm.password = 'aaaa'
+  vm.obj.key = 'ddd'
 
   vm.$nextTick(_ => {
     t.false(vm.$vuerify.check())
     t.true(vm.$vuerify.check(['password']))
+    t.true(vm.$vuerify.check(['obj.key']))
+    t.false(vm.$vuerify.check(['obj.key2']))
     vm.$destroy(true)
     t.end()
   })

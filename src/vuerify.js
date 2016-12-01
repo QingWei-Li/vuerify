@@ -75,11 +75,12 @@ const Vuerify = function (_vm) {
 Vuerify.prototype.check = function (fields) {
   const vm = this.vm
   const rules = vm.$options.vuerify
+  const parsePath = Vue.util.parsePath
 
   fields = fields || Object.keys(rules)
 
   return fields.map(field =>
-    check.call(vm, rules[field], field, vm._data[field])
+    check.call(vm, rules[field], field, parsePath ? parsePath(field)(vm._data) : vm.$get(field))
   ).indexOf(false) === -1
 }
 
