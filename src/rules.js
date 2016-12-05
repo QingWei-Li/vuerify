@@ -4,7 +4,7 @@ export default {
     message: '邮箱格式错误'
   },
   required: {
-    test: /\S+$/,
+    test: /\S+/,
     message: '必填项'
   },
   url: {
