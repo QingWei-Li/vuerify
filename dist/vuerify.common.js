@@ -61,7 +61,7 @@ function check (rule, field, value, isArray) {
     if (valid) {
       Vue.delete($errors, field)
     } else if (!oldError) {
-      $errors[field] = regex.message
+      Vue.set($errors, field, regex.message)
     }
   } else {
     var error = $errors[field] || []
