@@ -101,6 +101,9 @@ function init () {
 
 var Vuerify = function (_vm) {
   this.vm = _vm
+  Vue.util.defineReactive(this, '$errors', {})
+  Vue.util.defineReactive(this, 'invalid', true)
+  Vue.util.defineReactive(this, 'valid', false)
 }
 
 Vuerify.prototype.check = function (fields) {
@@ -122,9 +125,6 @@ Vuerify.prototype.clear = function () {
 var vuerifyInit = function (_Vue, opts) {
   Vue = _Vue
   Vuerify.prototype.$rules = objectAssign({}, RULES, opts)
-  Vue.util.defineReactive(Vuerify.prototype, '$errors', {})
-  Vue.util.defineReactive(Vuerify.prototype, 'invalid', true)
-  Vue.util.defineReactive(Vuerify.prototype, 'valid', false)
   Vue.mixin({ created: init })
 }
 
