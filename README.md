@@ -79,7 +79,7 @@ component
     }
   },
 
-  compouted: {
+  computed: {
     errors () {
       return this.$vuerify.$errors
     }
