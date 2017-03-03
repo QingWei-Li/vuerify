@@ -61,6 +61,6 @@
     "webpack-dev-server": "^2.1.0-beta.7"
   },
   "dependencies": {
-    "object-assign": "^4.1.0"
+    "simple-assign": "^0.1.0"
   }
 }

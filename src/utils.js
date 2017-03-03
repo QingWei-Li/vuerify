@@ -1,3 +1,5 @@
+import simpleAssign from 'simple-assign'
+
 /**
  * check value type
  * @param  {String}  type
@@ -26,3 +28,5 @@ export function parsePath (path) {
     }
   }
 }
+
+export const assign = Object.assign || simpleAssign

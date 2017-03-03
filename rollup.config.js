@@ -5,7 +5,7 @@ export default {
   moduleName: 'Vuerify',
   plugins: [buble()],
   globals: {
-    'object-assign': 'Object.assign'
+    'simple-assign': 'Object.assign'
   },
   targets: [
     { format: 'cjs', dest: 'dist/vuerify.common.js' },

@@ -1,6 +1,5 @@
 import RULES from './rules'
-import { is, parsePath } from './utils'
-import objectAssign from 'object-assign'
+import { is, parsePath, assign } from './utils'
 
 let Vue
 
@@ -94,6 +93,6 @@ Vuerify.prototype.clear = function () {
 
 export default function (_Vue, opts) {
   Vue = _Vue
-  Vuerify.prototype.$rules = objectAssign({}, RULES, opts)
+  Vuerify.prototype.$rules = assign({}, RULES, opts)
   Vue.mixin({ created: init })
 }
