@@ -1,5 +1,5 @@
 import RULES from './rules'
-import { is } from './utils'
+import { is, parsePath } from './utils'
 import objectAssign from 'object-assign'
 
 let Vue
@@ -78,12 +78,12 @@ const Vuerify = function (_vm) {
 Vuerify.prototype.check = function (fields) {
   const vm = this.vm
   const rules = vm.$options.vuerify
-  const parsePath = Vue.util.parsePath
+  const parse = Vue.util.parsePath || parsePath
 
   fields = fields || Object.keys(rules)
 
   return fields.map(field =>
-    check.call(vm, rules[field], field, parsePath ? parsePath(field)(vm._data) : vm.$get(field))
+    check.call(vm, rules[field], field, parse(field)(vm._data))
   ).indexOf(false) === -1
 }
 
