@@ -54,7 +54,7 @@ new Vue({
       if (this.$vuerify.check()) {
         alert(`welcome ${this.username}`) // eslint-disable-line
       }
-      console.log(this.$vuerify.all())
+      //console.log(this.$vuerify.all())
     }
   }
 })
